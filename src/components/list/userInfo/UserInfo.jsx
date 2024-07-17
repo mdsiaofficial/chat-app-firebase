@@ -5,16 +5,17 @@ import video from '../../../../public/video.png';
 import edit from '../../../../public/edit.png';
 const UserInfo = () => {
   return (
-    <div className='userInfo p-[20px] flex items-center justify-between '>
+    <div className='userInfo p-[20px] flex items-center justify-between bg-[#36388bc9] bg-opacity-50 backdrop-blur-md  rounded-lg'>
       
-      <div className="user">
-        <img src={avatar} alt="" />
+      <div className="user flex items-center gap-4">
+        <img className='w-12 h-12 rounded-full object-cover' src={avatar} alt="" />
+        <h2 className=''>{ `Ashiq` }</h2>
       </div>
 
-      <div className="icons">
-        <img src={more} alt="" />
-        <img src={video} alt="" />
-        <img src={edit} alt="" />
+      <div className="icons flex gap-4">
+        <img src={more} alt="" className='w-4 h-4 '/>
+        <img src={video} alt="" className='w-4 h-4 '/>
+        <img src={edit} alt="" className='w-4 h-4 '/>
       </div>
     
     </div>

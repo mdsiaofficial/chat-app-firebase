@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <h1 className='boxContainer flex bg-indigo-500 opacity-90 backdrop-blur-xl  border-white border rounded-lg'>
+      <h1 className='boxContainer flex bg-opacity-90 backdrop-blur-xl  border-white border rounded-lg'>
         
         <List />
         <Chat />

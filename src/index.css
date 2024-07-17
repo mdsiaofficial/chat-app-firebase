@@ -1,17 +1,18 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
 
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
-  padding: 0; 
+  padding: 0;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   transition: background-color 0.2s ease-in-out;
+  color: white;
 }
 
-body{
+body {
   background-image: url(/public/bg.jpg);
   display: flex;
   justify-content: center;
@@ -19,7 +20,26 @@ body{
   height: 100vh;
 }
 
-.boxContainer{
+.boxContainer {
   width: 90vw;
   height: 90vh;
+  background-color: #19197079;
+}
+
+
+@layer utilities {
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+  
 }
