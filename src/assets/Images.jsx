@@ -17,5 +17,6 @@ import plus from './plus.png';
 import search from './search.png';
 import theme from './theme.png';
 import video from './video.png';
+import pexels from './pexels.jpg';
 
-export {arrowDown, arrowUp, avatar, bg, camera,download, edit, emoji, favicon,img,info,mic,minus,more,phone,plus,search,theme,video} 
+export {arrowDown, arrowUp, avatar, bg, camera,download, edit, emoji, favicon,img,info,mic,minus,more,phone,plus,search,theme,video, pexels} 

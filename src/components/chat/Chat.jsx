@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import EmojiPicker from 'emoji-picker-react'
 import './Chat.css'
-import { avatar, camera, emoji, img, info, mic, phone, video } from '../../assets/Images'
+import { avatar, camera, emoji, img, info, mic, pexels, phone, video } from '../../assets/Images'
 const Chat = () => {
 
   const [openEmoji, setOpenEmoji] = useState(false);
@@ -33,11 +33,11 @@ const Chat = () => {
         </div>
       </div>
 
-      <div className="center p-5 flex-1 overflow-scroll flex flex-col gap-5">
+      <div className="center p-5 flex-1 no-scrollbar  overflow-scroll flex flex-col gap-5">
 
-
+        {/* messages here */}
         <div className="message ">
-          <img src={avatar} alt="" />
+          <img src={avatar} alt="" className='avatar' />
           <div className="texts">
             <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
@@ -46,7 +46,47 @@ const Chat = () => {
         </div>
 
         <div className="message  own">
-          <img src={avatar} alt="" />
+          <img src={avatar} alt="" className=' avatar own' />
+          <div className="texts">
+            <img src={pexels} alt="" />
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message">
+          <img src={avatar} alt="" className='avatar' />
+          <div className="texts">
+            <img src={pexels} alt="" />
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message own">
+          <img src={avatar} alt="" className=' avatar own' />
+          <div className="texts">
+            <img src={pexels} alt="" />
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message ">
+          <img src={avatar} alt="" className='avatar' />
+          <div className="texts">
+            <img src={pexels} alt="" />
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message  own">
+          <img src={avatar} alt="" className=' avatar own' />
           <div className="texts">
             <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
@@ -55,7 +95,7 @@ const Chat = () => {
         </div>
 
         <div className="message">
-          <img src={avatar} alt="" />
+          <img src={avatar} alt="" className='avatar' />
           <div className="texts">
             <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
@@ -64,14 +104,16 @@ const Chat = () => {
         </div>
 
         <div className="message own">
-          <img src={avatar} alt="" />
+          <img src={avatar} alt="" className=' avatar own' />
           <div className="texts">
+            <img src={pexels} alt="" />
             <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
             <span>1 min ago</span>
           </div>
         </div>
 
+        {/* messages here */}
 
       </div>
       <div className="bottom p-5 flex items-center justify-between gap-4 mt-auto ">

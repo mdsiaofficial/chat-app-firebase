@@ -24,7 +24,7 @@
   max-width: 70%;
   display: flex;
   gap: 20px;
-
+  font-size: .9rem;
   &.own {
     align-self: flex-end;
 
@@ -39,22 +39,40 @@
 
   }
 
-  img {
+  .avatar{
     width: 30px;
     height: 30px;
     border-radius: 50%;
+
+    &.own{
+      display: none;
+    }
   }
+
 
   .texts {
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     gap: 5px;
 
+    img{
+      width: 100%;
+      object-fit: fill;
+      border-radius: 10px;
+      height: fit-content;
+      
+    }
     p {
       padding: 20px;
       background-color: gray;
       border-radius: 20px;
+    }
+
+    span{
+      font-weight: 300;
+      font-size: .7rem;
     }
   }
 
