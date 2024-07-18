@@ -1,21 +1,29 @@
 import Chat from "./components/chat/Chat"
 import Details from "./components/details/Details"
 import List from "./components/list/List"
-
+import Login from "./components/Login/Login";
 
 function App() {
-  
+
+  const user = false;
 
   return (
     <>
-      <h1 className='boxContainer flex bg-opacity-90 backdrop-blur-2xl  border-white border rounded-lg'>
-        
-        <List />
-        <Chat />
-        <Details />
-        
+      <div className='boxContainer flex bg-opacity-90 backdrop-blur-2xl  border-white border rounded-lg'>
 
-      </h1>
+        {user ? (
+          <>
+            <List />
+            <Chat />
+            <Details />
+          </>
+        ) : (
+          <Login />
+        )}
+
+
+
+      </div>
     </>
   )
 }

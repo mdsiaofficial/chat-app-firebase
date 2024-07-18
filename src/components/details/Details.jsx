@@ -8,12 +8,12 @@ const Details = () => {
     <div className='details md2:flex-1'>
 
       <div className="user px-5 py-4 flex flex-col items-center gap-5 border-b-2 border-[gray]">
-        <img src={avatar} alt="" className='w-[100px] h-[100px] rounded-full object-cover'/>
+        <img src={avatar} alt="" className='w-[100px] h-[100px] rounded-full object-cover' />
         <h2>{`Ashiq `}</h2>
         <p>{`Lorem ipsum dolor, sit `}</p>
       </div>
 
-      <div className="info p-5 flex flex-col gap-7">
+      <div className="info p-5 flex flex-col gap-6">
 
         {/* opt */}
         <div className="option">
@@ -29,7 +29,7 @@ const Details = () => {
             <span>{`Shared Media`}</span>
             <img src={arrowDown} alt="" className='' />
           </div>
-          <div className="photos">
+          <div className="photos mt-4">
 
             {/* items */}
             <div className="photoItem">
@@ -37,18 +37,7 @@ const Details = () => {
 
                 <img src={pexels} alt="" />
                 <span>{`photo_2024_2.png`}</span>
-              
-              </div>
-              <img src={download} alt="" className='downBtn'/>
-            </div>
-            
-            {/* items */}
-            <div className="photoItem">
-              <div className="photoDetails">
 
-                <img src={pexels} alt="" />
-                <span>{`photo_2024_2.png`}</span>
-              
               </div>
               <img src={download} alt="" className='downBtn' />
             </div>
@@ -59,18 +48,29 @@ const Details = () => {
 
                 <img src={pexels} alt="" />
                 <span>{`photo_2024_2.png`}</span>
-              
+
               </div>
               <img src={download} alt="" className='downBtn' />
             </div>
-            
+
             {/* items */}
             <div className="photoItem">
               <div className="photoDetails">
 
                 <img src={pexels} alt="" />
                 <span>{`photo_2024_2.png`}</span>
-              
+
+              </div>
+              <img src={download} alt="" className='downBtn' />
+            </div>
+
+            {/* items */}
+            <div className="photoItem">
+              <div className="photoDetails">
+
+                <img src={pexels} alt="" />
+                <span>{`photo_2024_2.png`}</span>
+
               </div>
               <img src={download} alt="" className='downBtn' />
             </div>
@@ -94,10 +94,8 @@ const Details = () => {
           </div>
         </div>
 
-
-        {/* opt */}
-        <button>Block User</button>
-
+        <button className='py-3 bg-[crimson] hover:bg-red-400 border-none rounded-md cursor-pointer'>Block User</button>
+        <button className='py-3 bg-[#3f14dc52] hover:bg-[#0000ff] border-none rounded-md cursor-pointer'>Log Out</button>
 
       </div>
 
