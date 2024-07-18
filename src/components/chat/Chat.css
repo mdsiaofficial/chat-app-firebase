@@ -1,19 +1,61 @@
-.chat{
-  
+.chat {
+
   border-left: 2px solid gray;
   border-right: 2px solid gray;
 
-  .top{
-    .user{
+  .top {
+    border-bottom: 2px solid gray;
+
+    .user {
 
 
-      img{
-        
-      }
+      img {}
     }
   }
 }
 
-.sendButton{
-  
+.sendButton {}
+
+.bottom {
+  border-top: 2px solid gray;
+}
+
+.message {
+  max-width: 70%;
+  display: flex;
+  gap: 20px;
+
+  &.own {
+    align-self: flex-end;
+
+    .texts {
+      p {
+        padding: 20px;
+        background-color: #0c3163;
+        border-radius: 20px;
+
+      }
+    }
+
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  .texts {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    p {
+      padding: 20px;
+      background-color: gray;
+      border-radius: 20px;
+    }
+  }
+
 }

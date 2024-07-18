@@ -15,9 +15,9 @@ const Chat = () => {
   }
 
   return (
-    <div className='chat md2:flex-[2_2_0%] '>
+    <div className='chat md2:flex-[2_2_0%] flex flex-col'>
 
-      <div className="top p-5 flex items-center justify-between border-b">
+      <div className="top p-5 flex items-center justify-between ">
         <div className="user flex items-center gap-5">
           <img src={avatar} alt="" className='w-14 h-14 rounded-full object-cover' />
           <div className="texts flex flex-col gap-1">
@@ -33,8 +33,48 @@ const Chat = () => {
         </div>
       </div>
 
-      <div className="center"></div>
-      <div className="bottom p-5 flex items-center justify-between border-gray-900 gap-4 ">
+      <div className="center p-5 flex-1 overflow-scroll flex flex-col gap-5">
+
+
+        <div className="message ">
+          <img src={avatar} alt="" />
+          <div className="texts">
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message  own">
+          <img src={avatar} alt="" />
+          <div className="texts">
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message">
+          <img src={avatar} alt="" />
+          <div className="texts">
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+        <div className="message own">
+          <img src={avatar} alt="" />
+          <div className="texts">
+            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+
+            <span>1 min ago</span>
+          </div>
+        </div>
+
+
+      </div>
+      <div className="bottom p-5 flex items-center justify-between gap-4 mt-auto ">
 
         <div className="icons flex gap-5">
           <img src={img} alt="" className='w-5 h-5 cursor-pointer' />
@@ -47,7 +87,7 @@ const Chat = () => {
 
         <div className="emoji relative icons flex gap-5">
           <img src={emoji} alt="" className='w-5 h-5 cursor-pointer' onClick={() => setOpenEmoji((prev) => !prev)} />
-          <div className="picker absolute">
+          <div className="picker absolute bottom-12 right-0">
             <EmojiPicker open={openEmoji} onEmojiClick={handleEmoji} />
           </div>
         </div>
