@@ -21,13 +21,13 @@ const Chat = () => {
   }
 
   return (
-    <div className='chat md2:flex-[2_2_0%] flex flex-col'>
+    <div className='chat md2:flex-[2_2_0%] flex flex-col text-white'>
 
       <div className="top p-5 flex items-center justify-between ">
         <div className="user flex items-center gap-5">
           <img src={avatar} alt="" className='w-14 h-14 rounded-full object-cover' />
           <div className="texts flex flex-col gap-1">
-            <span className='text-[1.1rem] font-bold'>{`Ashiq`}</span>
+            <span className='text-[1.1rem] font-bold'>{`Fariha`}</span>
             <p className='text-[.8rem] font-normal opacity-60'>Lorem ipsum, dolor </p>
           </div>
         </div>

@@ -7,7 +7,7 @@ const ChatList = () => {
   const [addMode, setAddMode] = useState(false);
 
   return (
-    <div className='chatList flex-1 no-scrollbar overflow-scroll p-3'>
+    <div className='chatList flex-1 no-scrollbar overflow-scroll p-3 text-white'>
       <div className="search flex items-center gap-5 p-5 ">
         <div className="searchBar p-2 flex-1 bg-gray-800 flex items-center gap-5 rounded-lg  ">
           <img src={search} alt="" className='w-5 h-5' />

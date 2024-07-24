@@ -5,11 +5,11 @@ import { arrowDown, arrowUp, avatar, download, pexels } from '../../assets/Image
 
 const Details = () => {
   return (
-    <div className='details md2:flex-1'>
+    <div className='details md2:flex-1 text-white'>
 
       <div className="user px-5 py-4 flex flex-col items-center gap-5 border-b-2 border-[gray]">
         <img src={avatar} alt="" className='w-[100px] h-[100px] rounded-full object-cover' />
-        <h2>{`Ashiq `}</h2>
+        <h2>{`Fariha`}</h2>
         <p>{`Lorem ipsum dolor, sit `}</p>
       </div>
 

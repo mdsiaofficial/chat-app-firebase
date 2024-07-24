@@ -5,7 +5,7 @@ import video from '../../../../public/video.png';
 import edit from '../../../../public/edit.png';
 const UserInfo = () => {
   return (
-    <div className='userInfo p-[20px] flex items-center justify-between bg-[#36388bc9] bg-opacity-50 backdrop-blur-md  rounded-lg'>
+    <div className='userInfo p-[20px] flex items-center justify-between bg-[#36388bc9] bg-opacity-50 backdrop-blur-md  rounded-lg text-white'>
       
       <div className="user flex items-center gap-4">
         <img className='w-12 h-12 rounded-full object-cover' src={avatar} alt="" />

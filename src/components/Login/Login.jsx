@@ -27,10 +27,10 @@ const Login = () => {
   return (
     <div className='w-[100%] h-[100%] flex gap-10 items-center justify-evenly'>
 
-      <div className="login ">
+      <div className="login flexc">
 
         {/* login */}
-        <div className="item">
+        <div className="item flex flex-col text-white">
           <h2>Welcom back, </h2>
           <form action="" onSubmit={handleLogin}>
 
@@ -45,7 +45,7 @@ const Login = () => {
 
       <div className="signup">
         {/* sign up */}
-        <div className="item">
+        <div className="item flex flex-col text-white">
           <h2>Create an Account</h2>
           <form action="">
 
