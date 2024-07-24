@@ -1,9 +1,7 @@
-.login{
+.login {}
 
-}
-
-.item{
-  flex:1;
+.item {
+  flex: 1;
   display: flex;
   flex-direction: column;
 
@@ -11,7 +9,7 @@
   gap: 20px;
 
 
-  form{
+  form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,15 +17,16 @@
     gap: 20px;
 
 
-    input{
+    input {
       padding: 20px;
-      border:none;
+      border: none;
       outline: none;
       background-color: aliceblue;
       border-radius: 10px;
+      color: black;
     }
 
-    label{
+    label {
       width: 100%;
       display: flex;
       align-items: center;
@@ -35,12 +34,21 @@
       cursor: pointer;
       text-decoration: underline;
 
-      img{
+      img {
         width: 100px;
         height: 100px;
         border-radius: 10px;
         object-fit: cover;
       }
+    }
+
+    button {
+      width: 100%;
+      padding: 20px;
+      border: none;
+      background-color: #203550;
+      border-radius: 10px;
+
     }
   }
 }

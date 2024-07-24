@@ -1,12 +1,13 @@
 import './Login.css'
 import React, { useState } from 'react'
 import { avatar } from '../../assets/Images'
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
   const [avatarImage, setAvatarImage] = useState({
     file: null,
-    url:""
+    url: ""
   });
   const handleAvatar = (e) => {
 
@@ -18,15 +19,20 @@ const Login = () => {
     }
 
   }
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    toast.warn("HELLO")
+  }
   return (
-    <div className='w-[100%] h-[100%] flex gap-10 items-center justify-around'>
+    <div className='w-[100%] h-[100%] flex gap-10 items-center justify-evenly'>
 
       <div className="login ">
 
         {/* login */}
         <div className="item">
           <h2>Welcom back, </h2>
-          <form action="">
+          <form action="" onSubmit={handleLogin}>
 
             <input type="text" placeholder='Email' name='email' />
             <input type="password" placeholder='Password' name='password' />
@@ -34,8 +40,8 @@ const Login = () => {
           </form>
         </div>
 
-        <div className="separator"></div>
       </div>
+      <div className="separator h-[80%] w-[3px] bg-slate-500"></div>
 
       <div className="signup">
         {/* sign up */}
@@ -44,10 +50,10 @@ const Login = () => {
           <form action="">
 
             <label htmlFor="file" className='flex justify-center items-center'>
-              <img src={avatarImage.url || avatar}  alt="" className='h-12' />
+              <img src={avatarImage.url || avatar} alt="" className='h-12' />
               Upload Avatar
             </label>
-            <input type="file" name='file' id='file' style={{display:'none'}} onChange={handleAvatar}/>
+            <input type="file" name='file' id='file' style={{ display: 'none' }} onChange={handleAvatar} />
             <input type="text" placeholder='Username' name='username' />
             <input type="text" placeholder='Email' name='email' />
             <input type="password" placeholder='Password' name='password' />

@@ -2,10 +2,11 @@ import Chat from "./components/chat/Chat"
 import Details from "./components/details/Details"
 import List from "./components/list/List"
 import Login from "./components/Login/Login";
+import Notification from "./components/notification/Notification";
 
 function App() {
 
-  const user = false;
+  const user = true;
 
   return (
     <>
@@ -21,7 +22,7 @@ function App() {
           <Login />
         )}
 
-
+        <Notification/>
 
       </div>
     </>
