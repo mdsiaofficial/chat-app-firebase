@@ -1,20 +1,17 @@
 import './Login.css'
 import React, { useState } from 'react'
+import { avatar } from '../../assets/Images'
 
 const Login = () => {
 
-  const [avatar, setAvatar] = useState(
-    {
-      file: null,
-      url:"",
-    }
-  )
-
-
+  const [avatarImage, setAvatarImage] = useState({
+    file: null,
+    url:""
+  });
   const handleAvatar = (e) => {
 
     if (e.target.files[0]) {
-      setAvatar({
+      setAvatarImage({
         file: e.target.files[0],
         url: URL.createObjectURL(e.target.files[0]),
       })
@@ -22,9 +19,11 @@ const Login = () => {
 
   }
   return (
-    <div>
+    <div className='w-[100%] h-[100%] flex gap-10 items-center justify-around'>
 
-      <div className="login w-[100%] h-[100%] flex items-center gap-28">
+      <div className="login ">
+
+        {/* login */}
         <div className="item">
           <h2>Welcom back, </h2>
           <form action="">
@@ -36,12 +35,16 @@ const Login = () => {
         </div>
 
         <div className="separator"></div>
+      </div>
+
+      <div className="signup">
+        {/* sign up */}
         <div className="item">
           <h2>Create an Account</h2>
           <form action="">
 
-            <label htmlFor="file">
-              <img src={avatar}  alt="A" />
+            <label htmlFor="file" className='flex justify-center items-center'>
+              <img src={avatarImage.url || avatar}  alt="" className='h-12' />
               Upload Avatar
             </label>
             <input type="file" name='file' id='file' style={{display:'none'}} onChange={handleAvatar}/>
@@ -52,6 +55,8 @@ const Login = () => {
           </form>
         </div>
       </div>
+
+
     </div>
   )
 }
