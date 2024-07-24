@@ -19,11 +19,12 @@ const Login = () => {
         url: URL.createObjectURL(e.target.files[0]),
       })
     }
+
   }
   return (
     <div>
 
-      <div className="login">
+      <div className="login w-[100%] h-[100%] flex items-center gap-28">
         <div className="item">
           <h2>Welcom back, </h2>
           <form action="">
@@ -40,7 +41,7 @@ const Login = () => {
           <form action="">
 
             <label htmlFor="file">
-              <img  alt="" />
+              <img src={avatar}  alt="A" />
               Upload Avatar
             </label>
             <input type="file" name='file' id='file' style={{display:'none'}} onChange={handleAvatar}/>
