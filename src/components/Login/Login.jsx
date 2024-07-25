@@ -2,6 +2,11 @@ import './Login.css'
 import React, { useState } from 'react'
 import { avatar } from '../../assets/Images'
 import { toast } from 'react-toastify';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../../lib/firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import upload from '../../lib/upload';
+
 
 const Login = () => {
 
@@ -24,14 +29,38 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    toast.warn("HELLO")
+    toast.success("HELLO");
   }
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target)
 
     const { username, email, password } = Object.fromEntries(formData);
     console.log(username);
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const imgUrl = await upload(avatarImage.file);
+
+      await setDoc(doc(db, "users", res.user.uid), {
+        username,
+        email,
+        id: res.user.uid,
+        blocked:[],
+      });
+      
+      await setDoc(doc(db, "userChats", res.user.uid), {
+        chats:[],
+      });
+
+
+      toast.success("Account created Succesfully!");
+
+
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
   }
 
 

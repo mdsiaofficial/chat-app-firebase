@@ -10,7 +10,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
+  apiKey: "AIzaSyAht5Ih7NBlgKS5TVQSrqjA-ZnALqrOnKI",
   authDomain: "chat-app-firebase-a3890.firebaseapp.com",
   projectId: "chat-app-firebase-a3890",
   storageBucket: "chat-app-firebase-a3890.appspot.com",
