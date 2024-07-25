@@ -47,10 +47,14 @@
       width: 100%;
       padding: 20px;
       border: none;
-      background-color: #203550;
+      background-color: #26599c;
       border-radius: 10px;
       cursor: pointer;
       font-weight: 600;
+      &:disabled{
+        cursor: not-allowed;
+        background-color: #575c63;
+      }
     }
   }
 }
