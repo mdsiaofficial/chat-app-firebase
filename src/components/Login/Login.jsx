@@ -33,15 +33,19 @@ const Login = () => {
   }
   const handleRegister = async (e) => {
     e.preventDefault();
+    // form theke event niye form data collect 
     const formData = new FormData(e.target)
 
+    // destructure the data from the form data
     const { username, email, password } = Object.fromEntries(formData);
     console.log(username);
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(res.user.uid);
       const imgUrl = await upload(avatarImage.file);
-
+      console.log(imgUrl);
+      // creating new table/doc of new-user
       await setDoc(doc(db, "users", res.user.uid), {
         username,
         email,
@@ -49,13 +53,13 @@ const Login = () => {
         blocked:[],
       });
       
+      // creating new table/doc of new-users-chat
       await setDoc(doc(db, "userChats", res.user.uid), {
         chats:[],
       });
 
-
+      // notification of sign up successful
       toast.success("Account created Succesfully!");
-
 
     } catch (error) {
       console.error(error);
@@ -93,6 +97,7 @@ const Login = () => {
               <img src={avatarImage.url || avatar} alt="" className='h-12' />
               Upload Avatar
             </label>
+
             <input type="file" name='file' id='file' style={{ display: 'none' }} onChange={handleAvatar} />
             <input type="text" placeholder='Username' name='username' />
             <input type="text" placeholder='Email' name='email' />
