@@ -9,6 +9,8 @@ const Login = () => {
     file: null,
     url: ""
   });
+
+
   const handleAvatar = (e) => {
 
     if (e.target.files[0]) {
@@ -24,6 +26,15 @@ const Login = () => {
     e.preventDefault()
     toast.warn("HELLO")
   }
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target)
+
+    const { username, email, password } = Object.fromEntries(formData);
+    console.log(username);
+  }
+
+
   return (
     <div className='w-[100%] h-[100%] flex gap-10 items-center justify-evenly'>
 
@@ -47,7 +58,7 @@ const Login = () => {
         {/* sign up */}
         <div className="item flex flex-col text-white">
           <h2>Create an Account</h2>
-          <form action="">
+          <form action="" onSubmit={handleRegister}>
 
             <label htmlFor="file" className='flex justify-center items-center'>
               <img src={avatarImage.url || avatar} alt="" className='h-12' />

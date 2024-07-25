@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './ChatList.css';
 import { arrowDown, arrowUp, avatar, bg, camera, download, edit, emoji, favicon, img, info, mic, minus, more, phone, plus, search, theme, video } from '../../../assets/Images';
+import AddUser from './addUser/AddUser';
 
 const ChatList = () => {
 
@@ -14,7 +15,7 @@ const ChatList = () => {
           <input type="text" placeholder='search' className='bg-transparent border-none outline-none text-white flex-1' />
         </div>
 
-        <img src={addMode ? plus : minus} alt="" className='w-8 h-8 p-1 rounded-lg bg-gray-800 cursor-pointer' onClick={ (e) => setAddMode((prev)=> !prev)} />
+        <img src={addMode ? minus : plus} alt="" className='w-8 h-8 p-1 rounded-lg bg-gray-800 cursor-pointer duration-500 transition-all' onClick={ (e) => setAddMode((prev)=> !prev)} />
       </div>
 
       <div className="item">
@@ -80,7 +81,10 @@ const ChatList = () => {
           <p>{`kire koi asos tui?`}</p>
         </div>
       </div>
+      <div className='duration-500 transition-all'>
+      {addMode && <AddUser/>}
 
+      </div>
     </div>
   )
 }

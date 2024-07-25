@@ -1,0 +1,20 @@
+.addUser{
+  width: max-content;
+  height: max-content;
+  padding: 30px;
+  background-color: #1b2174d0;
+  border-radius: 10px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  form{
+    display: flex;
+    gap: 20px;
+  }
+
+  
+}
