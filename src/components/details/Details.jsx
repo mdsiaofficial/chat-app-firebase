@@ -1,6 +1,7 @@
 import React from 'react'
 import './Details.css'
 import { arrowDown, arrowUp, avatar, download, pexels } from '../../assets/Images'
+import { auth } from '../../lib/firebase'
 
 
 const Details = () => {
@@ -95,7 +96,7 @@ const Details = () => {
         </div>
 
         <button className='py-3 bg-[crimson] hover:bg-red-400 border-none rounded-md cursor-pointer'>Block User</button>
-        <button className='py-3 bg-[#3f14dc52] hover:bg-[#0000ff] border-none rounded-md cursor-pointer'>Log Out</button>
+        <button className='py-3 bg-[#3f14dc52] hover:bg-[#0000ff] border-none rounded-md cursor-pointer' onClick={()=>auth.signOut()}>Log Out</button>
 
       </div>
 

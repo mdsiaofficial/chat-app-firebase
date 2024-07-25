@@ -1,15 +1,15 @@
 import React from 'react'
-import avatar from '../../../../public/avatar.png';
-import more from '../../../../public/more.png';
-import video from '../../../../public/video.png';
-import edit from '../../../../public/edit.png';
+import { avatar, edit, more, video } from '../../../assets/Images';
+import { useUserStore } from '../../../lib/userStore';
 const UserInfo = () => {
+
+  const { currentUser, isLoading, fetchUserInfo } = useUserStore();
   return (
     <div className='userInfo p-[20px] flex items-center justify-between bg-[#36388bc9] bg-opacity-50 backdrop-blur-md  rounded-lg text-white'>
       
       <div className="user flex items-center gap-4">
-        <img className='w-12 h-12 rounded-full object-cover' src={avatar} alt="" />
-        <h2 className=''>{ `Ashiq` }</h2>
+        <img className='w-12 h-12 rounded-full object-cover' src={currentUser.avatar || avatar} alt="" />
+        <h2 className=''>{ currentUser.username}</h2>
       </div>
 
       <div className="icons flex gap-4">

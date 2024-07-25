@@ -40,11 +40,12 @@ const Login = () => {
     try {
 
       await signInWithEmailAndPassword(auth, email, password);
-
       toast.success("HELLO");
+
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       toast.error(error.message);
+
     } finally {
       setLoading(false);
     }
@@ -92,13 +93,15 @@ const Login = () => {
 
 
   return (
-    <div className='w-[100%] h-[100%] flex gap-10 items-center justify-evenly'>
+    <div className='w-[100%] h-[100%] flex flex-col md:flex-row gap-10 items-center justify-evenly'>
 
-      <div className="login flexc">
+      <div className="login flex">
 
         {/* login */}
         <div className="item flex flex-col text-white">
-          <h2>Welcom back, </h2>
+        <h2 className='text-4xl'>Sign In</h2>
+
+          <h2>Welcom back</h2>
           <form action="" onSubmit={handleLogin}>
 
             <input type="text" placeholder='Email' name='email' />
@@ -113,7 +116,7 @@ const Login = () => {
       <div className="signup">
         {/* sign up */}
         <div className="item flex flex-col text-white">
-          <h2>Create an Account</h2>
+          <h2 className='text-4xl'>Create an Account</h2>
           <form action="" onSubmit={handleRegister}>
 
             <label htmlFor="file" className='flex justify-center items-center'>
