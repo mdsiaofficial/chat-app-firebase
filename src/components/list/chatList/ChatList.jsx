@@ -14,7 +14,7 @@ const ChatList = () => {
 
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "userChats", currentUser.id), async (res) => {
-      console.log("Current data: ", doc.data());
+      // console.log("Current data: ", doc.data());
       // setChats(doc.data());
       const items = res.data().chats;
 
