@@ -7,10 +7,13 @@ import Notification from "./components/notification/Notification";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
 import { useUserStore } from "./lib/userStore";
+import { useChatStore } from "./lib/chatStore";
 
 function App() {
 
+
   const { currentUser, isLoading, fetchUserInfo } = useUserStore();
+  const { chatId } = useChatStore();
 
   // const user = false;
   // const user = true;
@@ -36,8 +39,8 @@ function App() {
         {currentUser ? (
           <>
             <List />
-            <Chat />
-            <Details />
+            {chatId && <Chat />}
+            {chatId && <Details />}
           </>
         ) : (
           <Login />

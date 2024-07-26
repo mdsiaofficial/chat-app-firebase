@@ -1,33 +1,45 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { create } from 'zustand'
 import { db } from './firebase';
+import { useUserStore } from './userStore';
 
 export const useChatStore = create((set) => ({
   chatId: null,
   user: null,
-  isCurrentUserBlocked:false,
-  isReceiverBlocked:false,
-  isLoading: true,
-  fetchUserInfo: async (uid) => {
-    if (!uid) return set({ currentUser: null, isLoading: false });
-
-    try {
-      const docRef = doc(db, "users", uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        set({ currentUser: docSnap.data(), isLoading: false });
-      } else {
-        // docSnap.data() will be undefined in this case
-        console.log("No such document!");
-        set({ currentUser: null, isLoading: false });
-      }
-
-
-    } catch (error) {
-      console.log(error)
-      return set({ currentUser: null, isLoading: false });
+  isCurrentUserBlocked: false,
+  isReceiverBlocked: false,
+  changeChat: (chatId, user) => {
+    const currentUser = useUserStore.getState().currentUser;
+    // check current user is blocked or not
+    if (user.blocked.inlcudes(currentUser.id)) {
+      return set({
+        chatId,
+        user: null,
+        isCurrentUserBlocked: true,
+        isReceiverBlocked: false,
+      });
     }
+    // check receiver is blocked or not
+    else if (currentUser.blocked.inlcudes(user.id)) {
+      return set({
+        chatId,
+        user: user,
+        isCurrentUserBlocked: false,
+        isReceiverBlocked: true,
+      });
+    }
+    else {
+      return set({
+        chatId,
+        user,
+        isCurrentUserBlocked: false,
+        isReceiverBlocked: false,
+      });
+    }
+  },
+  changeBlock: () => {
+    set((state) => ({ ...state, isReceiverBlocked: !state.isReceiverBlocked }));
   }
-}))
+
+
+}));

@@ -4,6 +4,7 @@ import './Chat.css'
 import { avatar, camera, emoji, img, info, mic, pexels, phone, video } from '../../assets/Images'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
+import { useChatStore } from '../../lib/chatStore'
 
 
 
@@ -11,6 +12,9 @@ const Chat = () => {
   const [openEmoji, setOpenEmoji] = useState(false);
   const [text, setText] = useState('');
   const [chat, setChat] = useState();
+
+  const { chatId } = useChatStore();
+
   console.log(text);
 
   const endRef = useRef(null);
@@ -21,17 +25,17 @@ const Chat = () => {
 
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, "chats", "9xigsY1K4SgjEd4a8hIZ"), (res) => {
+    const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
       setChat(res.data());
     });
 
     return (() => {
       unSub();
     });
-  }, []);
+  }, [chatId]);
 
   console.log(chat);
-  
+
   const handleEmoji = (e) => {
     // console.log(e)
     setText((prev) => prev + e.emoji);
@@ -139,7 +143,7 @@ const Chat = () => {
 
         {/* messages here */}
 
-      <div className="" ref={endRef}></div>
+        <div className="" ref={endRef}></div>
       </div>
 
       <div className="bottom p-5 flex items-center justify-between gap-4 mt-auto ">

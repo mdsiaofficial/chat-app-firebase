@@ -5,13 +5,15 @@ import AddUser from './addUser/AddUser';
 import { useUserStore } from './../../../lib/userStore'
 import { db } from '../../../lib/firebase';
 import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { useChatStore } from '../../../lib/chatStore';
 
 const ChatList = () => {
 
   const [addMode, setAddMode] = useState(false);
-  const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
-
+  
+  const { currentUser } = useUserStore();
+  const { chatId, changeChat } = useChatStore();
   // console.log(chats);
 
   useEffect(() => {
@@ -40,6 +42,13 @@ const ChatList = () => {
     
   }, [currentUser.id]);
   console.log(chats);
+
+  const handleSelect = async (chat) => {
+    console.log(chat.id);
+    // Navigate to the selected chat page
+    await changeChat(chat.chatId, chat.user);
+
+  }
   return (
     <div className='chatList flex-1 no-scrollbar overflow-scroll p-3 text-white'>
       <div className="search flex items-center gap-5 p-5 ">
@@ -52,7 +61,7 @@ const ChatList = () => {
       </div>
 
       {chats.map((chat) => (
-        <div className="item" key={chat.chatId}>
+        <div className="item" key={chat.chatId} onClick={()=>handleSelect(chat)}>
         <img src={chat.user.avatar || avatar} alt="" />
         <div className="texts">
           <span>{chat.user.username}</span>
