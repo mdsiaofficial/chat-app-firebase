@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import EmojiPicker from 'emoji-picker-react'
 import './Chat.css'
 import { avatar, camera, emoji, img, info, mic, pexels, phone, video } from '../../assets/Images'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore'
 import { db } from '../../lib/firebase'
 import { useChatStore } from '../../lib/chatStore'
+import { useUserStore } from '../../lib/userStore'
 
 
 
@@ -13,7 +14,8 @@ const Chat = () => {
   const [text, setText] = useState('');
   const [chat, setChat] = useState();
 
-  const { chatId } = useChatStore();
+  const { chatId, user } = useChatStore();
+  const { currentUser } = useUserStore();
 
   console.log(text);
 
@@ -42,6 +44,44 @@ const Chat = () => {
     // setOpenEmoji(false);
   }
 
+  const handleSend = async () => {
+    if (!text) return;
+    try {
+      await updateDoc(doc(db, "chats", chatId), {
+        messages: arrayUnion({
+          senderId: currentUser.id,
+          text,
+          createdAt: Date.now(),
+        })
+      });
+
+      const userIds = [currentUser.id, user.id];
+
+      userIds.forEach(async (id) => {
+        const userChatsRef = doc(db, "userChats", id);
+        const userChatsSnapshot = await getDoc(userChatsRef);
+
+        if (userChatsSnapshot.exists()) {
+          const userChatsData = userChatsSnapshot.data();
+          const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
+
+          userChatsData[chatIndex].lastMessage = text;
+          userChatsData[chatIndex].isSeen = ((id === currentUser.id) ? true : false);
+          userChatsData[chatIndex].updatedAt = Date.now();
+
+          await updateDoc(userChatsRef, {
+            chats: userChatsData.chats,
+          });
+        }
+      })
+
+
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className='chat md2:flex-[2_2_0%] flex flex-col text-white'>
 
@@ -63,7 +103,7 @@ const Chat = () => {
 
       <div className="center p-5 flex-1 no-scrollbar  overflow-scroll flex flex-col gap-5">
 
-        {/* messages here */}
+        {/* messages */}
         <div className="message ">
           <img src={avatar} alt="" className='avatar' />
           <div className="texts">
@@ -73,76 +113,24 @@ const Chat = () => {
           </div>
         </div>
 
-        <div className="message  own">
-          <img src={avatar} alt="" className=' avatar own' />
-          <div className="texts">
-            <img src={pexels} alt="" />
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
-            <span>1 min ago</span>
-          </div>
-        </div>
+        {/* message own */}
+        {
+          chat?.messages?.map((message) => (
+            <div className="message  own" key={message.createdAt}>
+              <img src={avatar} alt="" className=' avatar own' />
+              <div className="texts">
+                {message.img && <img src={message.img} alt="" />}
+                <p> {message.text}</p>
 
-        <div className="message">
-          <img src={avatar} alt="" className='avatar' />
-          <div className="texts">
-            <img src={pexels} alt="" />
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
+                {/* <span>{message}</span> */}
+              </div>
+            </div>
+          ))
+        }
 
-            <span>1 min ago</span>
-          </div>
-        </div>
 
-        <div className="message own">
-          <img src={avatar} alt="" className=' avatar own' />
-          <div className="texts">
-            <img src={pexels} alt="" />
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
-
-            <span>1 min ago</span>
-          </div>
-        </div>
-
-        <div className="message ">
-          <img src={avatar} alt="" className='avatar' />
-          <div className="texts">
-            <img src={pexels} alt="" />
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
-
-            <span>1 min ago</span>
-          </div>
-        </div>
-
-        <div className="message  own">
-          <img src={avatar} alt="" className=' avatar own' />
-          <div className="texts">
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
-
-            <span>1 min ago</span>
-          </div>
-        </div>
-
-        <div className="message">
-          <img src={avatar} alt="" className='avatar' />
-          <div className="texts">
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
-
-            <span>1 min ago</span>
-          </div>
-        </div>
-
-        <div className="message own">
-          <img src={avatar} alt="" className=' avatar own' />
-          <div className="texts">
-            <img src={pexels} alt="" />
-            <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
-
-            <span>1 min ago</span>
-          </div>
-        </div>
-
-        {/* messages here */}
-
+        {/* scroll ref */}
         <div className="" ref={endRef}></div>
       </div>
 
@@ -164,7 +152,7 @@ const Chat = () => {
           </div>
         </div>
 
-        <button className='sendButton w-fit p-2 rounded-xl bg-purple-700 cursor-pointer'>Send</button>
+        <button className='sendButton w-fit p-2 rounded-xl bg-purple-700 cursor-pointer' onClick={handleSend}>Send</button>
       </div>
     </div>
   )
