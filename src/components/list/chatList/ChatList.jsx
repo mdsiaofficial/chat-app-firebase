@@ -11,6 +11,7 @@ const ChatList = () => {
 
   const [addMode, setAddMode] = useState(false);
   const [chats, setChats] = useState([]);
+  const [input, setInput] = useState('');
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -70,19 +71,20 @@ const ChatList = () => {
 
   };
 
+  const filteredChats = chats.filter((c) => c.user.username.toLowerCase().includes(input.toLowerCase()));
   
   return (
     <div className='chatList flex-1 no-scrollbar overflow-scroll p-3 text-white'>
       <div className="search flex items-center gap-5 p-5 ">
         <div className="searchBar p-2 flex-1 bg-gray-800 flex items-center gap-5 rounded-lg  ">
           <img src={search} alt="" className='w-5 h-5' />
-          <input type="text" placeholder='search' className='bg-transparent border-none outline-none text-white flex-1' />
+          <input type="text" placeholder='search' className='bg-transparent border-none outline-none text-white flex-1' onChange={(e)=>setInput(e.target.value)}/>
         </div>
 
         <img src={addMode ? minus : plus} alt="" className='w-8 h-8 p-1 rounded-lg bg-gray-800 cursor-pointer duration-500 transition-all' onClick={() => setAddMode((prev) => !prev)} />
       </div>
 
-      {chats.map((chat) => (
+      {filteredChats.map((chat) => (
         <div
           className="item"
           key={chat.chatId}
@@ -91,9 +93,9 @@ const ChatList = () => {
             backgroundColor: chat?.isSeen ? "transparent" : "#5183fe",
           }}
         >
-          <img src={chat.user.avatar || avatar} alt="" />
+          <img src={chat.user.blocked.includes(currentUser.id) ? "User" : (chat.user.avatar || avatar)} alt="" />
           <div className="texts">
-            <span>{chat.user.username}</span>
+            <span>{chat.user.blocked.includes(currentUser.id) ? "User" : chat.user.username}</span>
             <p>{chat.lastMessage}</p>
           </div>
         </div>

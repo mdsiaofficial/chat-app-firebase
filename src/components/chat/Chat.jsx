@@ -6,6 +6,7 @@ import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firesto
 import { db } from '../../lib/firebase'
 import { useChatStore } from '../../lib/chatStore'
 import { useUserStore } from '../../lib/userStore'
+import upload from '../../lib/upload'
 
 
 
@@ -16,9 +17,10 @@ const Chat = () => {
   const [img, setImg] = useState({
     file: null,
     url: "",
-  })
+  });
 
-  const { chatId, user } = useChatStore();
+
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
   const { currentUser } = useUserStore();
 
   console.log(text);
@@ -50,12 +52,21 @@ const Chat = () => {
 
   const handleSend = async () => {
     if (!text) return;
+
+    let imgUrl = null;
+
     try {
+
+      if (img.file) {
+        imgUrl = await upload(img.file);
+      }
+
       await updateDoc(doc(db, "chats", chatId), {
         messages: arrayUnion({
           senderId: currentUser.id,
           text,
           createdAt: Date.now(),
+          ...(imgUrl && { img: imgUrl }),
         })
       });
 
@@ -78,22 +89,34 @@ const Chat = () => {
           });
         }
       })
-
-
-
-
     } catch (error) {
       console.log(error);
     }
+
+    // setting the send box to null
+    setImg({
+      file: null,
+      url: "",
+    })
+    setText("");
   }
+
+  const handleImg = (e) => {
+    if (e.target.files[0]) {
+      setImg({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0]),
+      })
+    }
+  };
   return (
     <div className='chat md2:flex-[2_2_0%] flex flex-col text-white'>
 
       <div className="top p-5 flex items-center justify-between ">
         <div className="user flex items-center gap-5">
-          <img src={avatar} alt="" className='w-14 h-14 rounded-full object-cover' />
+          <img src={user?.avatar || avatar} alt="" className='w-14 h-14 rounded-full object-cover' />
           <div className="texts flex flex-col gap-1">
-            <span className='text-[1.1rem] font-bold'>{`Fariha`}</span>
+            <span className='text-[1.1rem] font-bold'>{user?.username}</span>
             <p className='text-[.8rem] font-normal opacity-60'>Lorem ipsum, dolor </p>
           </div>
         </div>
@@ -108,31 +131,38 @@ const Chat = () => {
       <div className="center p-5 flex-1 no-scrollbar  overflow-scroll flex flex-col gap-5">
 
         {/* messages */}
-        <div className="message ">
+        {/* <div className="message ">
           <img src={avatar} alt="" className='avatar' />
           <div className="texts">
             <p> {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, accusantium aliquid vitae dolor similique architecto maiores quis delectus ad cum, voluptatibus minus necessitatibus ullam illum inventore sed doloremque saepe odio.`}</p>
 
             <span>1 min ago</span>
           </div>
-        </div>
+        </div> */}
 
 
         {/* message own */}
         {
           chat?.messages?.map((message) => (
-            <div className="message  own" key={message.createdAt}>
+            <div className={message.senderId===currentUser.id? "message own": "message"} key={message.createdAt}>
               <img src={avatar} alt="" className=' avatar own' />
               <div className="texts">
                 {message.img && <img src={message.img} alt="" />}
                 <p> {message.text}</p>
 
-                {/* <span>{message}</span> */}
+                <span>{`1 min ago`}</span>
               </div>
             </div>
           ))
         }
 
+        {img.url &&
+          (<div className="message own">
+            <div className="texts">
+              <img src={img.url} alt="" />
+            </div>
+          </div>)
+        }
 
         {/* scroll ref */}
         <div className="" ref={endRef}></div>
@@ -141,13 +171,23 @@ const Chat = () => {
       <div className="bottom p-5 flex items-center justify-between gap-4 mt-auto ">
 
         <div className="icons flex gap-5">
-          <img src={img} alt="" className='w-5 h-5 cursor-pointer' />
+          <label htmlFor="file">
+            <img src={`./img.png`} className='w-5 h-5 cursor-pointer' />
+          </label>
+          <input type="file" name='file' id='file' style={{ display: "none" }} onChange={handleImg} />
           <img src={camera} alt="" className='w-5 h-5 cursor-pointer' />
           <img src={mic} alt="" className='w-5 h-5 cursor-pointer' />
 
         </div>
 
-        <input type="text" placeholder='Type your message...' className='p-2 border-2 border-gray-300 rounded-md flex-1 bg-gray-800 border-none outline-none' onChange={(e) => setText(e.target.value)} value={text} />
+        <input
+          type="text"
+          placeholder={isCurrentUserBlocked || isReceiverBlocked ? 'You cannot send message' : 'Type your message...'}
+          className='p-2 border-2 border-gray-300 rounded-md flex-1 bg-gray-800 border-none outline-none disabled:cursor-not-allowed'
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+        />
 
         <div className="emoji relative icons flex gap-5">
           <img src={emoji} alt="" className='w-5 h-5 cursor-pointer' onClick={() => setOpenEmoji((prev) => !prev)} />
@@ -156,7 +196,13 @@ const Chat = () => {
           </div>
         </div>
 
-        <button className='sendButton w-fit p-2 rounded-xl bg-purple-700 cursor-pointer' onClick={handleSend}>Send</button>
+        <button
+          className='sendButton w-fit p-2 rounded-xl bg-purple-700 cursor-pointer disabled:cursor-not-allowed'
+          onClick={handleSend}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+        >
+          Send
+        </button>
       </div>
     </div>
   )

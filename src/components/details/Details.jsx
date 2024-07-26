@@ -1,16 +1,34 @@
 import React from 'react'
 import './Details.css'
 import { arrowDown, arrowUp, avatar, download, pexels } from '../../assets/Images'
-import { auth } from '../../lib/firebase'
+import { auth, db } from '../../lib/firebase'
+import { useChatStore } from '../../lib/chatStore'
+import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
 
 
 const Details = () => {
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } = useChatStore();
+  const { currentUser } = useChatStore();
+  const handleBlock = async () => {
+    if (!user) return;
+    const userDocRef = doc(db, "users", currentUser.id)
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
+      changeBlock();
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className='details md2:flex-1 text-white'>
 
       <div className="user px-5 py-4 flex flex-col items-center gap-5 border-b-2 border-[gray]">
-        <img src={avatar} alt="" className='w-[100px] h-[100px] rounded-full object-cover' />
-        <h2>{`Fariha`}</h2>
+        <img src={user?.avatar || avatar} alt="" className='w-[100px] h-[100px] rounded-full object-cover' />
+        <h2>{user?.username}</h2>
         <p>{`Lorem ipsum dolor, sit `}</p>
       </div>
 
@@ -95,8 +113,20 @@ const Details = () => {
           </div>
         </div>
 
-        <button className='py-3 bg-[crimson] hover:bg-red-400 border-none rounded-md cursor-pointer'>Block User</button>
-        <button className='py-3 bg-[#3f14dc52] hover:bg-[#0000ff] border-none rounded-md cursor-pointer' onClick={()=>auth.signOut()}>Log Out</button>
+        <button
+          className='py-3 bg-[crimson] hover:bg-red-400 border-none rounded-md cursor-pointer'
+          onClick={handleBlock}
+        >
+          {
+            isCurrentUserBlocked
+              ? `You are Blocked`
+              : isReceiverBlocked
+                ? "User Blocked"
+                : `Block User`
+          }
+        </button>
+
+        <button className='py-3 bg-[#3f14dc52] hover:bg-[#0000ff] border-none rounded-md cursor-pointer' onClick={() => auth.signOut()}>Log Out</button>
 
       </div>
 
