@@ -12,6 +12,8 @@ const ChatList = () => {
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
 
+  // console.log(chats);
+
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "userChats", currentUser.id), async (res) => {
       // console.log("Current data: ", doc.data());
@@ -28,15 +30,14 @@ const ChatList = () => {
       });
 
       const chatData = await Promise.all(promises);
-
       setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
-
-
+      console.log(chatData);
     });
-
+    
     return (() => {
       unSub();
     });
+    
   }, [currentUser.id]);
   console.log(chats);
   return (
@@ -52,9 +53,9 @@ const ChatList = () => {
 
       {chats.map((chat) => (
         <div className="item" key={chat.chatId}>
-        <img src={avatar} alt="" />
+        <img src={chat.user.avatar || avatar} alt="" />
         <div className="texts">
-          <span>{`Ashiq`}</span>
+          <span>{chat.user.username}</span>
           <p>{chat.lastMessage}</p>
         </div>
       </div>

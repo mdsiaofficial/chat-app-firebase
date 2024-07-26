@@ -11,7 +11,7 @@ import { useUserStore } from '../../../../lib/userStore';
 const AddUser = () => {
 
   const [user, setUser] = useState(null);
-  const currentUser = useUserStore();
+  const {currentUser} = useUserStore();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -38,10 +38,10 @@ const AddUser = () => {
 
     e.preventDefault(); // Prevent form submission if present
 
-    if (!currentUser || !currentUser.id || !user || !user.id) {
-      console.error('Current user ID or user ID is undefined.');
-      return;
-    }
+    // if (!currentUser || !currentUser.id || !user || !user.id) {
+    //   console.error('Current user ID or user ID is undefined.');
+    //   return;
+    // }
 
     const chatRef = collection(db, "chats");
     const userChatsRef = collection(db, "userChats");
@@ -52,26 +52,28 @@ const AddUser = () => {
         createdAt: serverTimestamp(),
         messages: [],
       });
+      console.log(newChatRef);
+      console.log(newChatRef.id);
 
       await updateDoc(doc(userChatsRef, user.id), {
         chats: arrayUnion({
-          chatId: newChatRef.id,
-          lastMessage: "",
+          chatId:newChatRef.id,
+          lastMessage:"",
           receiverId: currentUser.id,
           updatedAt: Date.now(),
-        })
+        }),
       });
 
       await updateDoc(doc(userChatsRef, currentUser.id), {
         chats: arrayUnion({
-          chatId: newChatRef.id,
-          lastMessage: "",
+          chatId:newChatRef.id,
+          lastMessage:"",
           receiverId: user.id,
           updatedAt: Date.now(),
-        })
+        }),
       });
 
-      console.log(newChatRef.id);
+
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +86,7 @@ const AddUser = () => {
         <button className='p-2 bg-[#292929c4] hover:bg-[#47478096] border-none rounded-md cursor-pointer' type='submit'>Search</button>
       </form>
 
+      {/* search */}
       {
         user && (
           <div className="user mt-12 flex items-center justify-between">
