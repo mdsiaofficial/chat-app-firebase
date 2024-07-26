@@ -4,14 +4,14 @@ import { arrowDown, arrowUp, avatar, bg, camera, download, edit, emoji, favicon,
 import AddUser from './addUser/AddUser';
 import { useUserStore } from './../../../lib/userStore'
 import { db } from '../../../lib/firebase';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useChatStore } from '../../../lib/chatStore';
 
 const ChatList = () => {
 
   const [addMode, setAddMode] = useState(false);
   const [chats, setChats] = useState([]);
-  
+
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
   // console.log(chats);
@@ -35,20 +35,42 @@ const ChatList = () => {
       setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
       console.log(chatData);
     });
-    
+
     return (() => {
       unSub();
     });
-    
+
   }, [currentUser.id]);
   console.log(chats);
 
   const handleSelect = async (chat) => {
     console.log(chat.id);
-    // Navigate to the selected chat page
-    await changeChat(chat.chatId, chat.user);
+    const userChats = chats.map((item) => {
+      const { user, ...rest } = item;
+      return rest;
+    });
 
-  }
+    const chatIndex = userChats.findIndex((item) => (
+      item.chatId === chat.chatId
+    ));
+
+    userChats[chatIndex].isSeen = true;
+    const userChatsRef = doc(db, "userChats", currentUser.id);
+
+    try {
+      await updateDoc(userChatsRef, {
+        chats: userChats,
+      });
+      // Navigate to the selected chat page
+      await changeChat(chat.chatId, chat.user);
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  };
+
+  
   return (
     <div className='chatList flex-1 no-scrollbar overflow-scroll p-3 text-white'>
       <div className="search flex items-center gap-5 p-5 ">
@@ -61,15 +83,22 @@ const ChatList = () => {
       </div>
 
       {chats.map((chat) => (
-        <div className="item" key={chat.chatId} onClick={()=>handleSelect(chat)}>
-        <img src={chat.user.avatar || avatar} alt="" />
-        <div className="texts">
-          <span>{chat.user.username}</span>
-          <p>{chat.lastMessage}</p>
+        <div
+          className="item"
+          key={chat.chatId}
+          onClick={() => handleSelect(chat)}
+          style={{
+            backgroundColor: chat?.isSeen ? "transparent" : "#5183fe",
+          }}
+        >
+          <img src={chat.user.avatar || avatar} alt="" />
+          <div className="texts">
+            <span>{chat.user.username}</span>
+            <p>{chat.lastMessage}</p>
+          </div>
         </div>
-      </div>
       ))}
-      
+
 
 
       <div className='duration-500 transition-all'>

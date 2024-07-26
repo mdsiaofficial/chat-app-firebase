@@ -13,6 +13,10 @@ const Chat = () => {
   const [openEmoji, setOpenEmoji] = useState(false);
   const [text, setText] = useState('');
   const [chat, setChat] = useState();
+  const [img, setImg] = useState({
+    file: null,
+    url: "",
+  })
 
   const { chatId, user } = useChatStore();
   const { currentUser } = useUserStore();
@@ -23,7 +27,7 @@ const Chat = () => {
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  })
+  });
 
 
   useEffect(() => {
@@ -65,9 +69,9 @@ const Chat = () => {
           const userChatsData = userChatsSnapshot.data();
           const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
 
-          userChatsData[chatIndex].lastMessage = text;
-          userChatsData[chatIndex].isSeen = ((id === currentUser.id) ? true : false);
-          userChatsData[chatIndex].updatedAt = Date.now();
+          userChatsData.chats[chatIndex].lastMessage = text;
+          userChatsData.chats[chatIndex].isSeen = ((id === currentUser.id) ? true : false);
+          userChatsData.chats[chatIndex].updatedAt = Date.now();
 
           await updateDoc(userChatsRef, {
             chats: userChatsData.chats,
